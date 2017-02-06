@@ -4,20 +4,28 @@
 ### Compilation
 
 1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
+A development environment
 
 2) Name two advantages of static typing over dynamic typing.
+There is never any confusion for the user or the computer what the type of something is.
+Code readability is much higher with unambiguous types.
 
 3) Give an example of a static semantic error.
+Passing a float as an index of an array.
 
 4) What are two reasons you might want to turn off code optimization?
+You might be doing something that could be considered inefficient deliberately.
+You want to avoid seemingly nonexistant bugs that appear only after compiling.
 
 5) When you run `gcc` with `-S`, why might the results look different on different computers?
+Assembly functions differently on different machines, because it's so close to machine code, so different machines would go about the same process with slightly different commands.
 
 6) If you spell a variable name wrong, or if you spell a function name wrong, 
 the error messages you get might look very different.  Why?
+The code will misinterpret you as trying to declare a new variable incorrectly or a new function incorrectly and, in it's attempt to figure out if that's ok, misreads the rest of the code too, which is why the first error message is usually the only one worth reading.
 
 7) What is a segmentation fault?
-
+An error that occurs when you try to access memory outside of the program's alloted range.
 
 ## Chapter 2
 
@@ -25,14 +33,19 @@ the error messages you get might look very different.  Why?
 ### Processes
 
 1) Give a real-world example of virtualization (ideally not one of the ones in the book).
+Amazon. We never have to know if what we are ordering is housed anywhere near where we order it to be delivered to, but it will end up there anyway.
 
 2) What is the difference between a program and a process?
+A process does one thing, while a program might use many processes to do many things at once.
 
 3) What is the primary purpose of the process abstraction?  What illusion does the process abstraction create?
+It allows the user to easily switch between windows without using a ton of processing power. It creates the illusion that the computer is always running all of the windows currently open, while instead having all but the active ones sleeping.
 
 4) What is the kernel?
+A part of the operating system responsible for core processes.
 
 5) What is a daemon?
+A process that runs in the background.
  
 
 ## Chapter 3
