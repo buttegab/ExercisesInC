@@ -54,31 +54,50 @@ A process that runs in the background.
 ### Virtual memory
 
 1) The Georgian alphabet has 33 letters.  How many bit are needed to specify a letter?
+6 bits
 
 2) In the UTF-16 character encoding, the binary representation of a character can take up to 32 bits.  
 Ignoring the details of the encoding scheme, how many different characters can be represented?
+4294967296 characters
+
 
 3) What is the difference between "memory" and "storage" as defined in Think OS?
+Memory is volatile and consists of RAM, storage is hard disk space and is not volatile. Volatile meaning that if the system suddenly lost power, volatile data would be lost and non volatile data would be safe.
+
 
 4) What is the difference between a GiB and a GB?  What is the percentage difference in their sizes?
+GiB is equal to 2^20 where GB is equal to 10^6.
+GiB is 104% as much as GB.
 
 5) How does the virtual memory system help isolate processes from each other?
+Virtual memory allows the OS to work with virtual addresses and ultimately map them to physical addresses in the hardware. The virtual space allows the OS to give different processes different spaces to work in in which they cannot interact with the same information at the same time. Also, if two processes manage to generate the same virtual address, there is no collision problem because everything is managed by the OS which keeps any conflict from happening.
 
 6) Why do you think the stack and the heap are usually located at opposite ends of the address space?
+The heap is essentially unused stack space, so there is no reason to allow them to mix. A logical progression of turning heap into stack and stack back into heap is much easier to understand and work with when they each have their own sections of address space. Also, they technically aren't at opposite ends of the address space, they're right next to each other with stack being on top of heap.
 
 7) What Python data structure would you use to represent a sparse array?
+A hashmap, or list of lists with some hashing function that roughly equally distributed elements to the sublists.
+
 
 8) What is a context switch?
+When the OS interrupts a running process, saves its state, and changes to another process.
 
 In this directory, you should find a subdirectory named `aspace` that contains `aspace.c`.  Run it on your computer and compare your results to mine.
   
 1) Add a second call to `malloc` and check whether the heap on your system grows up (toward larger addresses).  
+It does: 
+Address of p is 0x17f7010
+Address of n is 0x17f70a0 //new allocated memory
+
 
 2) Add a function that prints the address of a local variable, and check whether the stack grows down.  
+It does:
+Address of local is 0x7ffcd78bea0c
+Address of local2 is 0x7ffcd78be9ec
 
 3) Choose a random number between 1 and 32, and allocate two chunks with that size.  
 How much space is there between them?  Hint: Google knows how to subtract hexadecimal numbers.
-
+20 bytes.
 
 ## Chapter 4
 
