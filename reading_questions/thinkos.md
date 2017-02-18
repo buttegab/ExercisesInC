@@ -106,20 +106,27 @@ How much space is there between them?  Hint: Google knows how to subtract hexade
 
 1) What abstractions do file systems provide?  Give an example of something that is logically 
 true about files systems but not true of their implementations.
+Opening a file and having it be read all at once is the abstraction we get, but in reality the file is likely read in parts, across different blocks of storage. The reading of subsequent blocks to get the information is so fast that we don't notice it, and on a small scale it doesn't slow the program down very much, but it is there.
 
 2) What information do you imagine is stored in an `OpenFileTableEntry`?
+The pointer that keeps track of where in the file has already been read and where still needs to be read. I think it's possible there is other information like the file size and address stored in the structure.
 
 3) What are some of the ways operating systems deal with the relatively slow performance of persistent storage?
+They tend to do other things during the loading, like throw cycles at things that need work done, saving information, or preloading information that is likely to be used soon.
 
 4) Suppose your program writes a file and prints a message indicating that it is done writing.  
 Then a power cut crashes your computer.  After you restore power and reboot the computer, you find that the 
 file you wrote is not there.  What happened?
+The file was still in memory and had not been moved to storage yet. Therefore, when the power was cut, memory, being volatile, lost all state information, so the file was missing.
 
 5) Can you think of one advantage of a File Allocation Table over a UNIX inode?  Or an advantage of a inode over a FAT?
+FAT would be more effective at adding new blocks because of its implementation being similar to that of a linked list. An inode would be more effective for searching because searches wouldn't have to go in order, and the search could look for metadata like file size and last modified, when FAT could not.
 
 6) What is overhead?  What is fragmentation?
+Overhead is the amount of space required for the allocator to reside. It is ideal for this to be minimized so there is more room for information to be stored. Fragmentation is when blocks are partially or completely unfilled. 
 
 7) Why is the "everything is a file" principle a good idea?  Why might it be a bad idea?
+Imagining everything as a stream of data is useful for understanding how programs receive information. It falls short because in the end, it is an abstraction and not everything is read from or written to the same way. In most cases that won't matter, but the lower level you go, the more likely it is to have an effect.
 
 If you would like to learn more about file systems, a good next step is to learn about journaling file systems.  
 Start with [this Wikipedia article](https://en.wikipedia.org/wiki/Journaling_file_system), then 
