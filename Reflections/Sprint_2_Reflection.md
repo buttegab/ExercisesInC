@@ -7,7 +7,8 @@ Over the course of sprint 2, I learned about server/client implementation and co
 
 ###Head First C
 https://github.com/buttegab/ExercisesInC/tree/master/exercises/ex03
-
+https://github.com/buttegab/ExercisesInC/tree/master/exercises/ex04  *
+*this is incomplete, but it is throwing me such ridiculous errors that I don't even know where to begin with it, so I'll just say in the future I will develop code in such a way that I start with the more neat implementation and never have to convert it after the fact.
 
 ###ThinkOS
 https://github.com/buttegab/ExercisesInC/blob/master/reading_questions/thinkos.md
