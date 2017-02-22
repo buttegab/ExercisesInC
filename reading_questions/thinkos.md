@@ -141,19 +141,41 @@ Also consider reading [this USENIX paper](https://www.usenix.org/legacy/event/us
 
 1) Suppose you have the value 128 stored as an unsigned 8-bit number.  What happens if you convert 
 it to a 16-bit number and accidentally apply sign extension?
+1000 0000 --> 1111 1111 1000 0000
+Because sign extension doesn't look at whether the number is signed or unsigned, and instead just extends the leftmost bit, 128 becomes a much larger number when converted. It isn't negative because it's still unsigned.
 
 2) Write a C expression that computes the two's complement of 12 using the XOR bitwise operator. 
 Try it out and confirm that the result is interpreted as -12.
 
+#include <stdio.h>
+int main() {
+	// 	signed int res = 1100^1111;
+	signed int res = 12^15;
+	res = res + 1;
+	fprintf(stdout,"%i\n",res);	
+	return 1;
+}
+
+
 3) Can you guess why IEEE floating-point uses biased integers to represent the exponent rather than a
 sign bit or two's complement?
+I think it's because you can store more information in the same space because you can sacrifice specificity in the right bits.
 
 4) Following the example in Section 5.4, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
+11000001010100000000000000000000
+Int: 6486491136
 
 5) Write a function that takes a string and converts from lower-case to upper-case by flipping the sixth bit.  
 As a challenge, you can make a faster version by reading the string 32 or 64 bits at a time, rather than one
 character at a time.  This optimization is made easier if the length of the string is a multiple of 4 or 8 bytes.
+
+#include <stdio.h>
+int main() {
+	signed int res = 100000 ^ in_string
+	fprintf(stdout,"%i\n",res);	
+	return 1;
+}
 
 
 
