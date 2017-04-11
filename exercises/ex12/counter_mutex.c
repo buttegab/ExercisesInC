@@ -80,6 +80,7 @@ typedef struct {
     int counter;
     int end;
     int *array;
+    Semaphore *semaphore;
 } Shared;
 
 /*  make_shared
@@ -102,6 +103,7 @@ Shared *make_shared (int end)
     for (i=0; i<shared->end; i++) {
         shared->array[i] = 0;
     }
+    shared->semaphore = make_semaphore(1);
     return shared;
 }
 
@@ -157,7 +159,9 @@ void child_code (Shared *shared)
     // printf ("Starting child at counter %d\n", shared->counter);
 
     while (1) {
+        sem_wait(shared->semaphore);
 	    if (shared->counter >= shared->end) {
+            sem_signal(shared->semaphore);
 	        return;
 	    }
 	    shared->array[shared->counter]++;
@@ -166,6 +170,7 @@ void child_code (Shared *shared)
 	    if (shared->counter % 100000 == 0) {
 	        // printf ("%d\n", shared->counter);
 	    }
+        sem_signal(shared->semaphore);
     }
 }
 
@@ -229,3 +234,17 @@ int main ()
     check_array (shared);
     return 0;
 }
+
+
+/* 
+No Semaphores:
+real    0m2.759s
+user    0m4.904s
+sys     0m0.036s
+
+Semaphores:
+real    0m14.237s
+user    0m15.464s
+sys     0m12.028s
+
+*/
