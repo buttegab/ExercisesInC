@@ -23,6 +23,32 @@ typedef struct {
 } Pair;
 
 
+void pair_freer (gpointer key, gpointer value, gpointer user_data)
+{
+    Pair *pair = (Pair *) value;
+    g_free(pair);
+
+}
+
+void free_pairs(GHashTable* hash) {
+    g_hash_table_foreach (hash,  (GHFunc) pair_freer, NULL);
+}
+
+
+
+void seq_freer (gpointer key, gpointer value, gpointer user_data)
+{
+    Pair *pair = (Pair *) value;
+    g_free(pair);
+
+}
+
+void free_seq(GSequence* seq) {
+    g_sequence_foreach (seq,  (GFunc) seq_freer, NULL);
+}
+
+
+
 /* Compares two key-value pairs by frequency. */
 gint compare_pair (gpointer v1, gpointer v2, gpointer user_data)
 {
@@ -59,6 +85,8 @@ void accumulator (gpointer key, gpointer value, gpointer user_data)
 			      (gpointer) pair, 
 			      (GCompareDataFunc) compare_pair,
 			      NULL);
+    // g_free(pair);
+    // g_sequence_free (seq);
 }
 
 /* Increments the frequency associated with key. */
@@ -73,6 +101,7 @@ void incr (GHashTable* hash, gchar *key)
     } else {
 	*val += 1;
     }
+
 }
 
 int main (int argc, char** argv)
@@ -91,7 +120,6 @@ int main (int argc, char** argv)
 	perror (filename);
 	exit (-10);
     }
-
     /* string array is a (two-L) NULL terminated array of pointers to
        (one-L) NUL terminated strings */
     gchar **array;
@@ -100,6 +128,7 @@ int main (int argc, char** argv)
     int i;
 
     // read lines from the file and build the hash table
+    
     while (1) {
 	gchar *res = fgets (line, sizeof(line), fp);
 	if (res == NULL) break;
@@ -108,9 +137,11 @@ int main (int argc, char** argv)
 	for (i=0; array[i] != NULL; i++) {
 	    incr(hash, array[i]);
 	}
+    // g_strfreev(&res);
     }
+    // g_strfreev(&res);
+    g_strfreev(array);
     fclose (fp);
-
     // print the hash table
     // g_hash_table_foreach (hash,  (GHFunc) printor, "Word %s freq %d\n");
 
@@ -119,10 +150,12 @@ int main (int argc, char** argv)
     g_hash_table_foreach (hash,  (GHFunc) accumulator, (gpointer) seq);
 
     // iterate the sequence and print the pairs
-    g_sequence_foreach (seq,  (GFunc) pair_printor, NULL);
+    // g_sequence_foreach (seq,  (GFunc) pair_printor, NULL);
 
     // try (unsuccessfully) to free everything
     // (in a future exercise, we will fix the memory leaks)
+    free_pairs(hash);
+    free_seq(seq);
     g_hash_table_destroy (hash);
     g_sequence_free (seq);
 
